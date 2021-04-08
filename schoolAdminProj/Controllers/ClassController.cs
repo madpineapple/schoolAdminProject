@@ -15,6 +15,10 @@ namespace schoolAdminProj.Controllers
         {
             return View();
         }
+        public IActionResult GradeCreate()
+        {
+            return View();
+        }
         public IActionResult ClassCreate()
         {
             List<teacherModel> teachers = new List<teacherModel>();

@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Grade Create";
+}
+
+@model schoolData.Models.classModel;
+
+@{ 
+    <div class="text-center" id="object">
+        <form asp-controller="grade" asp-action="gradeCreate" method="post" role="form">
+            <label>Select Student</label>
+            <label>Select Class</label>
+            <label>Enter final grade</label>
+            <label>Comments</label>
+            <div class="form-group">
+                <input id="Submit1" class="btn btn-success" type="submit" value="submit" />
+            </div>
+        </form>
+    </div>
+}
