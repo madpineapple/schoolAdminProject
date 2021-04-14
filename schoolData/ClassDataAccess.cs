@@ -21,11 +21,11 @@ namespace schoolData
             }
         }
 
-        public static List<classModel> SelectClass(int grade, int TeacherId)
+        public static List<classModel> SelectClass(int grade)
         {
             using (IDbConnection cnn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=rockBottomHigh_DB;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
             {
-                var output = cnn.Query<classModel>("select* from Class where grade=" + grade + " AND where TeacherId= "+TeacherId+"");
+                var output = cnn.Query<classModel>("select* from Class where grade=" + grade +"");
                 return output.ToList();
             }
 

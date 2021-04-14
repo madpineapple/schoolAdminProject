@@ -2,18 +2,58 @@
     ViewData["Title"] = "Grade Create";
 }
 
-@model schoolData.Models.classModel;
 
-@{ 
+
+@Html.DropDownList("Options", null, new { onchange = "document.location='/Class/GradeCreate?value='+ this.value;" })
+
+@if (ViewBag.Value != null)
+{
+    <h2>Semester Grades for grade:@ViewBag.Value</h2>
+
     <div class="text-center" id="object">
         <form asp-controller="grade" asp-action="gradeCreate" method="post" role="form">
+            <label>Select Semester</label>
+            <select>
+                    <option>Fall</option>
+                   <option>Spring</option>
+                
+            </select>
+            <br />
+            <label>Select Year</label>
+            <select>
+                <option>@ViewBag.CurrentYear</option>
+                <option>@ViewBag.LastYear</option>
+            </select>
+            <br/>
             <label>Select Student</label>
-            <label>Select Class</label>
-            <label>Enter final grade</label>
-            <label>Comments</label>
+            <select>
+                @foreach (var student in ViewBag.Students)
+                {
+                    <option value="student.StudentId">@student.fname @student.lname</option>
+                }
+            </select>
+            <br />
+            <label>Enter final grade for each class</label>
+            <br />
+            @foreach (var classes in ViewBag.Classes)
+            {
+                <label>Enter final grade for @classes.topic</label>
+                <input type="text" id="finalGrade" name="finalGrade" value="" />
+                <br />
+                <textarea rows = "5" cols = "60" id="comments" name = "comments">Comments...</textarea>
+                <br />
+            }
             <div class="form-group">
                 <input id="Submit1" class="btn btn-success" type="submit" value="submit" />
             </div>
         </form>
     </div>
+
+
+
+
+}
+
+@{
+
 }

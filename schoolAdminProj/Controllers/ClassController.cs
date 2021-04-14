@@ -15,10 +15,49 @@ namespace schoolAdminProj.Controllers
         {
             return View();
         }
-        public IActionResult GradeCreate()
+        public IActionResult GradeCreate(int? value)
         {
+            //dropwdown list
+            List<SelectListItem> items = new List<SelectListItem>();
+            SelectListItem item1 = new SelectListItem() { Text = "Select Option", Value = "null" };
+            SelectListItem item2 = new SelectListItem() { Text = "Grade 9", Value = "9" };
+            SelectListItem item3 = new SelectListItem() { Text = "10", Value = "10" };
+            items.Add(item1);
+            items.Add(item2);
+            items.Add(item3);
+            ViewBag.Options = items;
+
+            if (value != null)
+            {
+                ViewBag.Value = value;
+
+                var currentYear = DateTime.Now.Year;
+                ViewBag.CurrentYear = currentYear;
+
+                var lastYear = DateTime.Now.Year - 1;
+                ViewBag.LastYear = lastYear;
+                
+
+                List<studentModel> students = new List<studentModel>();
+                students = StudentDataAccess.SelectStudentByGrade(Convert.ToInt32(value));
+                students.Insert(0, new studentModel { StudentId = 0, fname = "Select" });
+                ViewBag.Students = students;
+
+
+                List<classModel> classes = new List<classModel>();
+                classes = ClassDataAccess.SelectClass(Convert.ToInt32(value));
+                ViewBag.Classes=classes;
+
+            }
             return View();
         }
+        [HttpPost]
+        public IActionResult GradeCreate(classModel m)
+        {
+            ClassDataAccess.CreateNew(m);
+            return RedirectToAction("Index");
+        }
+
         public IActionResult ClassCreate()
         {
             List<teacherModel> teachers = new List<teacherModel>();
