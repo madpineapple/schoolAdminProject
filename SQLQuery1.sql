@@ -1,0 +1,1 @@
+﻿create table Grades(int GradeId IDENTITY(1,1) PRIMARY KEY,  StudentId int, grade int, ClassId int ,  Semest  er varchar(20));

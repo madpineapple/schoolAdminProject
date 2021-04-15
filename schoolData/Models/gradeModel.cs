@@ -10,9 +10,9 @@ namespace schoolData.Models
     {
         public int GradeId { get; set; }
         public int StudentId { get; set; }
+        public int grade { get; set; }
         public int ClassId { get; set; }
-        public DateTime dateOFEntry { get; set; }
-        public int finalGrade { get; set; }
-        public string comments { get; set; }
+        public string Semester { get; set; }
+
     }
 }

@@ -30,5 +30,14 @@ namespace schoolData
             }
 
         }
+
+        public static void CreateNewGrade(classModel klass)
+        {
+            using (IDbConnection cnn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=rockBottomHigh_DB;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            {
+                cnn.Query<gradeModel>("insert into Grades(StudentId, grade, ClassId, Semester) values(@StudentId, @grade, @ClassId, @Semester)", klass);
+
+            }
+        }
     }
 }
