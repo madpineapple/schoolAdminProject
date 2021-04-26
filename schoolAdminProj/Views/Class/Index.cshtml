@@ -12,7 +12,78 @@
     <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="GradeCreate">
         <input type="button" class="btn btn-primary" value="Create grade" />
     </a>
-    
 
-    
+    <h3>Chart</h3>
+
+    <div Style="font-family: Corbel; font-size: small ;text-align:center " class="row">
+        <div id="chartContainer" style="width:100%;height:100%">
+            <canvas id="myChart" style="padding: 0;margin: auto;display: block; "> </canvas>
+        </div>
+       
+        <script>
+
+        var arr1 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Students, Newtonsoft.Json.Formatting.Indented));
+        var arr2 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Grades, Newtonsoft.Json.Formatting.Indented));
+
+
+
+    var label = [];
+    var grades = [];
+    for (let i = 0; i < arr1.length; i++) {
+        label.push(arr1[i].fname)
+    }
+
+
+    for (let j = 0; j < arr2.length; j++) {
+        grades.push(arr2[j].finalGradeForHistory)
+    }
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        var barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: label,
+                datasets: [{
+                label: "Bar Chart Example",
+                    data: grades,
+                    backgroundColor: ['rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 0, 0)',
+                        'rgba(0, 255, 0)',
+                        'rgba(0, 0, 255)',
+                        'rgba(192, 192, 192)',
+                        'rgba(255, 255, 0)',
+                        'rgba(255, 0, 255)'],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 0, 0)',
+                        'rgba(0, 255, 0)',
+                        'rgba(0, 0, 255)',
+                        'rgba(192, 192, 192)',
+                        'rgba(255, 255, 0)',
+                        'rgba(255, 0, 255)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
+                legend: { display: false }
+            },
+        });
+        </script>
+    </div>
+
+
 </div>

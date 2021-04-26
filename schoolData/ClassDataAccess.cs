@@ -31,6 +31,17 @@ namespace schoolData
 
         }
 
+        //select grade
+        public static List<gradeModel> SelectGrade(int grade)
+        {
+            using (IDbConnection cnn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=rockBottomHigh_DB;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            {
+                var output = cnn.Query<gradeModel>("select* from Grades where grade=" + grade + "");
+                return output.ToList();
+            }
+
+        }
+
         public static void CreateNewGrade(gradeModel grade)
         {
             using (IDbConnection cnn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=rockBottomHigh_DB;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))

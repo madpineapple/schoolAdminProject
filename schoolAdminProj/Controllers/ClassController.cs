@@ -13,6 +13,14 @@ namespace schoolAdminProj.Controllers
     {
         public IActionResult Index()
         {
+            List<studentModel> allstudents = new List<studentModel>();
+            allstudents = StudentDataAccess.SelectStudentByGrade(9);
+            ViewBag.Students = allstudents;
+
+            List<gradeModel> grades = new List<gradeModel>();
+            grades = ClassDataAccess.SelectGrade(9);
+            ViewBag.Grades =grades;
+
             return View();
         }
         public IActionResult GradeCreate(int? value)
@@ -40,15 +48,16 @@ namespace schoolAdminProj.Controllers
 
                 List<studentModel> students = new List<studentModel>();
                 students = ClassDataAccess.listUngradedStudents(Convert.ToInt32(value));
-               
+
                 //ViewBag.Students = students;
-
-                List<studentModel> allstudents = new List<studentModel>();
-                allstudents = StudentDataAccess.SelectStudentByGrade(Convert.ToInt32(value));
-
                 
-               
-                //morestudents.Insert(0, new studentModel { StudentId = 0, fname = "Select" });
+                List<studentModel> allstudents = new List<studentModel>();
+                //allstudents = StudentDataAccess.SelectStudentByGrade(Convert.ToInt32(value));
+                foreach(var student in students)
+                {
+                  allstudents.AddRange(StudentDataAccess.SelectStudent(student.StudentId));
+                }
+                ViewBag.Students = allstudents;
 
 
                 List<classModel> classes = new List<classModel>();
