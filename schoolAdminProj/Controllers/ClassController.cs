@@ -21,7 +21,7 @@ namespace schoolAdminProj.Controllers
             List<SelectListItem> items = new List<SelectListItem>();
             SelectListItem item1 = new SelectListItem() { Text = "Select Option", Value = "null" };
             SelectListItem item2 = new SelectListItem() { Text = "Grade 9", Value = "9" };
-            SelectListItem item3 = new SelectListItem() { Text = "10", Value = "10" };
+            SelectListItem item3 = new SelectListItem() { Text = " Grade 10", Value = "10" };
             items.Add(item1);
             items.Add(item2);
             items.Add(item3);
@@ -39,9 +39,16 @@ namespace schoolAdminProj.Controllers
                 
 
                 List<studentModel> students = new List<studentModel>();
-                students = StudentDataAccess.SelectStudentByGrade(Convert.ToInt32(value));
-                students.Insert(0, new studentModel { StudentId = 0, fname = "Select" });
-                ViewBag.Students = students;
+                students = ClassDataAccess.listUngradedStudents(Convert.ToInt32(value));
+               
+                //ViewBag.Students = students;
+
+                List<studentModel> allstudents = new List<studentModel>();
+                allstudents = StudentDataAccess.SelectStudentByGrade(Convert.ToInt32(value));
+
+                
+               
+                //morestudents.Insert(0, new studentModel { StudentId = 0, fname = "Select" });
 
 
                 List<classModel> classes = new List<classModel>();
@@ -52,9 +59,9 @@ namespace schoolAdminProj.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult GradeCreate(classModel m)
+        public IActionResult GradeCreate(gradeModel m)
         {
-            ClassDataAccess.CreateNew(m);
+            ClassDataAccess.CreateNewGrade(m);
             return RedirectToAction("Index");
         }
 

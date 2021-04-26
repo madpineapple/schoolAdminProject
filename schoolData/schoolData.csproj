@@ -48,7 +48,6 @@
     <Compile Include="ClassDataAccess.cs" />
     <Compile Include="gradeAccess.cs" />
     <Compile Include="Models\classModel.cs" />
-    <Compile Include="Models\finalGradeModel.cs" />
     <Compile Include="Models\gradeModel.cs" />
     <Compile Include="Models\staffModel.cs" />
     <Compile Include="Models\studentModel.cs" />

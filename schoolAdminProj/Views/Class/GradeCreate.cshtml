@@ -11,36 +11,36 @@
     <h2>Semester Grades for grade:@ViewBag.Value</h2>
 
     <div class="text-center" id="object">
-        <form asp-controller="grade" asp-action="gradeCreate" method="post" role="form">
-            <label>Select Semester</label>
-            <select>
-                    <option>Fall</option>
-                   <option>Spring</option>
-                
-            </select>
-            <br />
-            <label>Select Year</label>
-            <select>
-                <option>@ViewBag.CurrentYear</option>
-                <option>@ViewBag.LastYear</option>
-            </select>
-            <br/>
+        <form asp-controller="Class" asp-action="GradeCreate" method="post" role="form">
             <label>Select Student</label>
-            <select>
+
+            <select id="StudentId" name="StudentId">
                 @foreach (var student in ViewBag.Students)
                 {
-                    <option value="student.StudentId">@student.fname @student.lname</option>
+                    <option value="@student.StudentId">@student.fname @student.lname</option>
                 }
             </select>
+            <br />
+            <label>Select Semester</label>
+            <select id="Semester" name="Semester">
+                <option value="Fall @ViewBag.CurrentYear">Fall @ViewBag.CurrentYear</option>
+                <option value="Spring @ViewBag.CurrentYear">Spring @ViewBag.CurrentYear</option>
+                <option value="Fall @ViewBag.LastYear">Fall @ViewBag.LastYear</option>
+                <option value="Spring @ViewBag.LastYear">Spring @ViewBag.LastYear</option>
+
+            </select>
+            <br />
+            <label>Grade</label>
+            <input type="text" id="grade" name="grade" value="@ViewBag.Value"/>
             <br />
             <label>Enter final grade for each class</label>
             <br />
             @foreach (var classes in ViewBag.Classes)
             {
-                <label>Enter final grade for @classes.topic</label>
-                <input type="text" id="finalGrade" name="finalGrade" value="" />
+                <label>Enter final grade for @classes.topic </label>
+                <input type="text" id="finalGradeFor@{@classes.topic}" name="finalGradeFor@{@classes.topic}" value="" />
                 <br />
-                <textarea rows = "5" cols = "60" id="comments" name = "comments">Comments...</textarea>
+                <textarea rows="5" cols="60" id="commentsFor@{@classes.topic}" name="commentsFor@{@classes.topic}">Comments...</textarea>
                 <br />
             }
             <div class="form-group">
@@ -48,9 +48,6 @@
             </div>
         </form>
     </div>
-
-
-
 
 }
 

@@ -31,13 +31,37 @@ namespace schoolData
 
         }
 
-        public static void CreateNewGrade(classModel klass)
+        public static void CreateNewGrade(gradeModel grade)
         {
             using (IDbConnection cnn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=rockBottomHigh_DB;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
             {
-                cnn.Query<gradeModel>("insert into Grades(StudentId, grade, ClassId, Semester) values(@StudentId, @grade, @ClassId, @Semester)", klass);
-
+                cnn.Query<gradeModel>("insert into Grades (StudentId, grade, Semester,finalGradeForHistory," +
+                    " commentsForHistory,finalGradeForGrammar, commentsForGrammar," +
+                    "finalGradeForLiterature, commentsForLiterature,finalGradeForVocabulary," +
+                    " commentsForVocabulary,finalGradeForMath, commentsForMath, finalGradeForScience, " +
+                    "commentsForScience) values(@StudentId, @grade, @Semester,@finalGradeForHistory," +
+                    "@commentsForHistory,@finalGradeForGrammar, @commentsForGrammar," +
+                    "@finalGradeForLiterature, @commentsForLiterature,@finalGradeForVocabulary, " +
+                    "@commentsForVocabulary,@finalGradeForMath, @commentsForMath, @finalGradeForScience, " +
+                    "@commentsForScience)", grade);
+                
             }
         }
+
+        public static List<studentModel> listUngradedStudents( int grade)
+        {
+            using (IDbConnection cnn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=rockBottomHigh_DB;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            {
+                var output=cnn.Query<studentModel>("SELECT StudentId, grade FROM Grades Where grade =" + grade + " " +
+                    "Union " +
+                    "SELECT StudentId,  grade FROM students Where grade = " + grade + " " +
+                    "Except " +
+                    "SELECT StudentId, grade FROM Grades Where grade =" + grade + " " +
+                    "Intersect " +
+                    "SELECT StudentId, grade FROM students Where grade =" + grade + " ");
+                    return output.ToList();
+            }
+        }
+
     }
 }
